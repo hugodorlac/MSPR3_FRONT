@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Connexion API</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <style>
+        @import url('https://rsms.me/inter/inter-ui.css');
+
+        ::selection {
+            background: #2D2F36;
+        }
+        
+        ::-webkit-selection {
+            background: #2D2F36;
+        }
+        
+        ::-moz-selection {
+            background: #2D2F36;
+        }
+        .connexion {
+            margin-top: 4rem !important;
+        }
+
+        body {
+            background: white;
+            font-family: 'Inter UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .page {
+            background: linear-gradient(152deg, #79adff, #ed89ff, #ffffff);
+            background-size: 600% 600%;
+            -webkit-animation: AnimationName 30s ease infinite;
+            -moz-animation: AnimationName 30s ease infinite;
+            animation: AnimationName 30s ease infinite;
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 40px);
+            position: absolute;
+            place-content: center;
+            width: calc(100% - 40px);
+        }
+
+        @-webkit-keyframes AnimationName {
+            0%{background-position:0% 49%}
+            50%{background-position:100% 52%}
+            100%{background-position:0% 49%}
+        }
+        @-moz-keyframes AnimationName {
+            0%{background-position:0% 49%}
+            50%{background-position:100% 52%}
+            100%{background-position:0% 49%}
+        }
+        @keyframes AnimationName {
+            0%{background-position:0% 49%}
+            50%{background-position:100% 52%}
+            100%{background-position:0% 49%}
+        }
+        
+        @media (max-width: 767px) {
+            .page {
+                height: auto;
+                margin-bottom: 20px;
+                padding-bottom: 20px;
+            }
+        }
+        
+        .container {
+            display: flex;
+            height: 320px;
+            margin: 0 auto;
+            width: 640px;
+        }
+        
+        @media (max-width: 767px) {
+            .container {
+                flex-direction: column;
+                height: 630px;
+                width: 320px;
+            }
+        }
+        
+        .left {
+            background: white;
+            height: calc(100% - 40px);
+            top: 20px;
+            position: relative;
+            width: 50%;
+        }
+        
+        @media (max-width: 767px) {
+            .left {
+                height: 100%;
+                left: 20px;
+                width: calc(100% - 40px);
+                max-height: 270px;
+            }
+        }
+        
+        .login {
+            font-size: 50px;
+            font-weight: 900;
+            margin: 50px 40px 40px;
+        }
+        
+        .login2 {
+            font-size: 50px;
+            font-weight: 900;
+            margin: 00px 40px 00px;
+        }
+        
+        .right {
+            background-color: rgb(71, 74, 89, 0.7);
+            box-shadow: 0px 0px 40px 16px rgba(0, 0, 0, 0.22);
+            color: #F1F1F2;
+            position: relative;
+            width: 50%;
+        }
+
+        .right2 {
+            background-color: rgb(71, 74, 89, 0.7);
+            box-shadow: 0px 0px 40px 16px rgba(0, 0, 0, 0.22);
+            color: #F1F1F2;
+            position: relative;
+            width: 50%;
+        }
+        
+        @media (max-width: 767px) {
+            .right {
+                flex-shrink: 0;
+                height: 100%;
+                width: 100%;
+                max-height: 350px;
+            }
+        }
+        
+        svg {
+            position: absolute;
+            width: 320px;
+        }
+        
+        path {
+            fill: none;
+            stroke: url(#linearGradient);
+            ;
+            stroke-width: 4;
+            stroke-dasharray: 240 1386;
+        }
+        
+        .form {
+            margin: 40px;
+            position: absolute;
+            margin-top: 4rem;
+            height: 10rem;
+        }
+
+        .formSub {
+            position:sticky;
+            margin: 40px;
+            height: 10rem;
+        }
+        
+        label {
+            color: #c2c2c5;
+            display: block;
+            font-size: 14px;
+            height: 16px;
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+        
+        input {
+            background: transparent;
+            border: 0;
+            color: #f2f2f2;
+            font-size: 20px;
+            height: 30px;
+            line-height: 30px;
+            outline: none !important;
+            width: 100%;
+        }
+        
+        input::-moz-focus-inner {
+            border: 0;
+        }
+        
+        #submit {
+            color: #ffffff;
+            margin-top: 10px;
+            transition: color 300ms;
+        }
+
+        #submit2 {
+            color: #ffffff;
+            margin-top: 110px;
+            transition: color 300ms;
+        }
+
+        #submit2:hover {
+            color: #8c33ff;
+        }
+        
+        #submit:hover {
+            color: #8c33ff;
+        }
+
+        .flex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .subscribe {
+            position: absolute;
+            bottom: 0;
+            padding: 1rem;
+            font-size: 0.7rem;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+        <div class="container">
+            <div class="left">
+                <div class="login">Dailybiz</div>
+                <div class="login2">PIM</div>
+            </div>
+            <div id="login" class="right">
+                <svg viewBox="0 0 320 300">
+                    <path d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 215 c 0,0 20,-0.99604 20,-25 0,-24.00396 -20,-25 -20,-25 h -190 c 0,0 -20,1.71033 -20,25 0,24.00396 20,25 20,25 h 168.57143" />
+                </svg>
+                <div class="form">
+                    <label for="utilisateur">Utilisateur</label>
+                    <input type="text" id="utilisateur">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password">
+                    <input class="" type="submit" id="submit" value="Connexion">
+                </div>
+                <p onclick="showSubscribe()" class="text-light mt-5 mr-1 subscribe" href="">S'inscrire</p>
+            </div>
+            <div id="subscribe" class="right rightSub">
+                <svg viewBox="0 0 320 300">
+                    <path d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 215 c 0,0 20,-0.99604 20,-25 0,-24.00396 -20,-25 -20,-25 h -190 c 0,0 -20,1.71033 -20,25 0,24.00396 20,25 20,25 h 168.57143" />
+                </svg>
+                <div class="formSub form">
+                    <label for="email">Email</label>
+                    <input type="text" id="email">
+                    <label for="utilisateur">Utilisateur</label>
+                    <input type="text" id="utilisateur">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password">
+                    <input class="" type="submit" id="submit" value="S'inscrire">
+                </div>
+                <p onclick="showLogin()" class="text-light mt-5 mr-1 subscribe">Se connecter</p>
+            </div>
+            <div class="right2 flex">
+                    <img src="">
+                    <h2 style="color:#9693ff; margin-left:12px;">Une erreur est survenue</h2>
+                    <p style="margin-left:12px;">L'une au moins des informations "code abonné", "utilisateur" ou "mot de passe" que vous avez saisies est incorrecte.</p>
+                    <input onclick="location.reload()" type="submit" id="submit2" value="Réessayer">
+            </div>
+        </div>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js'></script>
+  </body>
+</html>
+<script>
+
+    function connectionFailed() {
+        document.querySelector('.right').style.display = "none"
+        document.querySelector('.right2').style.display = "block"
+    }
+
+    function showSubscribe() {
+        document.querySelector('#subscribe').style.display = ""
+        document.querySelector('#login').style.display = "none"
+    }
+
+    function showLogin() {
+        document.querySelector('#login').style.display = ""
+        document.querySelector('#subscribe').style.display = "none"
+    }
+
+    document.querySelector('#subscribe').style.display = "none"
+    document.querySelector('.right2').style.display = "none"
+    var current = null;
+    document.querySelector('#email').addEventListener('focus', function (e) {
+    if (current) current.pause();
+    current = anime({
+    targets: 'path',
+    strokeDashoffset: {
+    value: 0,
+    duration: 700,
+    easing: 'easeOutQuart' },
+
+    strokeDasharray: {
+    value: '240 1386',
+    duration: 700,
+    easing: 'easeOutQuart' } });
+
+
+    });
+    document.querySelector('#password').addEventListener('focus', function (e) {
+    if (current) current.pause();
+    current = anime({
+    targets: 'path',
+    strokeDashoffset: {
+    value: -336,
+    duration: 700,
+    easing: 'easeOutQuart' },
+
+    strokeDasharray: {
+    value: '240 1386',
+    duration: 700,
+    easing: 'easeOutQuart' } });
+
+
+    });
+    document.querySelector('#submit').addEventListener('focus', function (e) {
+    if (current) current.pause();
+    current = anime({
+    targets: 'path',
+    strokeDashoffset: {
+    value: -730,
+    duration: 700,
+    easing: 'easeOutQuart' },
+
+    strokeDasharray: {
+    value: '530 1386',
+    duration: 700,
+    easing: 'easeOutQuart' } });
+
+
+    });
+
+
+</script>
