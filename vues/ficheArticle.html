@@ -10,8 +10,24 @@
   <script src="https://kit.fontawesome.com/270c520df2.js" crossorigin="anonymous"></script>
   <style>
     .title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 5px;
       background-color: #8d16ae9e;
+    }
+    .title h2 {
+      margin: 0;
+    }
+    .icon-container {
+      display: flex;
+      align-items: center;
+    }
+    .fa-right-to-bracket {
+      margin-left: 98%;
+      position: fixed;
+      right: 1%;
+      top: 1%;
     }
     body {
       margin: 0;
@@ -39,9 +55,11 @@
   </style>
 </head>
 <body>
-  <header class="row title">
+  <header class="row title"> 
     <h2 class="text-center">Dailybiz PIM</h2>
-    <i class="fa-solid fa-right-to-bracket"></i>
+    <div class="icon-container">
+      <i class="fa-solid fa-right-to-bracket fa-2xl"></i>
+    </div>
   </header>
 
   <div class="container container-info">
