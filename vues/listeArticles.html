@@ -55,65 +55,63 @@
     </body>
 
     <script>
-      fetch('https://localhost:7075/ReadCardItem')
-    .then(response => response.json())
-    .then(data => {
-      const articleContainer = document.getElementById('article-container');
-      data.forEach(article => {
-        const cardDiv = document.createElement('div');
-        cardDiv.classList.add('card');
-        cardDiv.style.width = '18rem';
-        cardDiv.setAttribute('onclick', 'redirect(1)');
+          fetch('https://localhost:7075/ReadCardItem')
+        .then(response => response.json())
+        .then(data => {
+          const articleContainer = document.getElementById('article-container');
+          data.forEach(article => {
+            const cardDiv = document.createElement('div');
+            cardDiv.classList.add('card');
+            cardDiv.style.width = '18rem';
+            cardDiv.setAttribute('onclick', 'redirect('+ article.idItem +')');
 
-        const cardImage = document.createElement('img');
-        cardImage.classList.add('card-img-top');
-        cardImage.style.maxWidth = '180px';
-        cardImage.style.maxHeight = '180px';
-        cardImage.style.alignSelf = 'center';
-        cardImage.style.objectFit = 'cover';
-        cardImage.style.borderRadius = '5px';
-        cardImage.src = article.mediaPath;
-        cardImage.alt = 'Image de la carte';
+            const cardImage = document.createElement('img');
+            cardImage.classList.add('card-img-top');
+            cardImage.style.maxWidth = '180px';
+            cardImage.style.maxHeight = '180px';
+            cardImage.style.alignSelf = 'center';
+            cardImage.style.objectFit = 'cover';
+            cardImage.style.borderRadius = '5px';
+            cardImage.src = article.mediaPath;
+            cardImage.alt = 'Image de la carte';
 
-        const cardBodyDiv = document.createElement('div');
-        cardBodyDiv.classList.add('card-body');
+            const cardBodyDiv = document.createElement('div');
+            cardBodyDiv.classList.add('card-body');
 
-        const cardTitle = document.createElement('h5');
-        cardTitle.classList.add('card-title');
-        cardTitle.textContent = article.descriptionShort;
+            const cardTitle = document.createElement('h5');
+            cardTitle.classList.add('card-title');
+            cardTitle.textContent = article.descriptionShort;
 
-        const cardPrice = document.createElement('p');
-        cardPrice.classList.add('card-text');
-        cardPrice.textContent = 'Prix : ' + article.price;
+            const cardPrice = document.createElement('p');
+            cardPrice.classList.add('card-text');
+            cardPrice.textContent = 'Prix : ' + article.price;
 
-        const cardGtin = document.createElement('p');
-        cardGtin.classList.add('card-text');
-        cardGtin.textContent = 'GTIN : ' + article.gtin;
+            const cardGtin = document.createElement('p');
+            cardGtin.classList.add('card-text');
+            cardGtin.textContent = 'GTIN : ' + article.gtin;
 
-        const deleteIcon = document.createElement('i');
-        deleteIcon.classList.add('fa-solid', 'fa-trash');
-        deleteIcon.setAttribute('onclick', 'deleteArticle()');
+            const deleteIcon = document.createElement('i');
+            deleteIcon.classList.add('fa-solid', 'fa-trash');
+            deleteIcon.setAttribute('onclick', 'deleteArticle()');
 
-        cardBodyDiv.appendChild(cardTitle);
-        cardBodyDiv.appendChild(cardPrice);
-        cardBodyDiv.appendChild(cardGtin);
-        cardBodyDiv.appendChild(deleteIcon);
+            cardBodyDiv.appendChild(cardTitle);
+            cardBodyDiv.appendChild(cardPrice);
+            cardBodyDiv.appendChild(cardGtin);
+            cardBodyDiv.appendChild(deleteIcon);
 
-        cardDiv.appendChild(cardImage);
-        cardDiv.appendChild(cardBodyDiv);
+            cardDiv.appendChild(cardImage);
+            cardDiv.appendChild(cardBodyDiv);
 
-        articleContainer.appendChild(cardDiv);
-      });
-    })
-    .catch(error => {
-      console.error('Une erreur s\'est produite lors de la récupération des données de l\'API:', error);
-    });
+            articleContainer.appendChild(cardDiv);
+          });
+        })
+        .catch(error => {
+          console.error('Une erreur s\'est produite lors de la récupération des données de l\'API:', error);
+        });
 
-    
-        function redirect(idArticle) {
-            window.location = "ficheArticle.html?idArticle=" + idArticle; 
-        }
-
+        function redirect(idItem) {
+            window.location = "ficheArticle.html?idArticle=" + idItem;
+          }
         function deleteArticle(idArticle) {
 
         }
