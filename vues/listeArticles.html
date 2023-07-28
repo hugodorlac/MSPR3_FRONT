@@ -32,8 +32,8 @@
         padding: 2rem;
         }
 
-        #submit:hover {
-            color: #8c33ff;
+        .card-body i.fa-trash:hover {
+          color: #8c33ff;
         }
         
     </style>
@@ -45,8 +45,8 @@
             </header>
        
     
-            <div style="display: flex;">
-              <div class="container mt-5" id="article-container">
+            <div >
+              <div class="container mt-5" style="display: flex;flex-wrap: wrap; justify-content: space-between;" id="article-container">
 
               </div>
             
@@ -64,12 +64,11 @@
             const cardDiv = document.createElement('div');
             cardDiv.classList.add('card');
             cardDiv.style.width = '18rem';
-            //cardDiv.setAttribute('onclick', 'redirect('+ article.idItem +')');
 
             const cardImage = document.createElement('img');
             cardImage.classList.add('card-img-top');
             cardImage.style.maxWidth = '180px';
-            cardImage.style.maxHeight = '180px';
+            cardImage.style.maxHeight = '120px';
             cardImage.style.alignSelf = 'center';
             cardImage.style.objectFit = 'cover';
             cardImage.style.borderRadius = '5px';
@@ -91,6 +90,12 @@
             cardGtin.classList.add('card-text');
             cardGtin.textContent = 'GTIN : ' + article.gtin;
 
+            const viewButton = document.createElement('button');
+            viewButton.classList.add('btn', 'btn-light');
+            viewButton.textContent = "Voir l'article";
+            viewButton.style.float = "right"; 
+            viewButton.addEventListener('click', () => redirect(article.idItem));
+
             const deleteIcon = document.createElement('i');
             deleteIcon.classList.add('fa-solid', 'fa-trash');
             deleteIcon.setAttribute('onclick', 'deleteArticle(' + article.idItem + ')');
@@ -99,6 +104,8 @@
             cardBodyDiv.appendChild(cardPrice);
             cardBodyDiv.appendChild(cardGtin);
             cardBodyDiv.appendChild(deleteIcon);
+            cardBodyDiv.appendChild(viewButton);
+
 
             cardDiv.appendChild(cardImage);
             cardDiv.appendChild(cardBodyDiv);
