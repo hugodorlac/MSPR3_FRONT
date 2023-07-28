@@ -65,7 +65,7 @@
        
     
             <div >
-              <div class="container mt-5" style="display: flex;flex-wrap: wrap; justify-content: space-between;" id="article-container">
+              <div class="container mt-5" style="display: flex;flex-wrap: wrap; justify-content: center;" id="article-container">
 
               </div>
             
@@ -81,7 +81,7 @@
           const articleContainer = document.getElementById('article-container');
           data.forEach(article => {
             const cardDiv = document.createElement('div');
-            cardDiv.classList.add('card');
+            cardDiv.classList.add('card', 'm-2');
             cardDiv.style.width = '18rem';
 
             const cardImage = document.createElement('img');
