@@ -29,7 +29,7 @@
       right: 1%;
       top: 1%;
     }
-    body {
+    body {     
       margin: 0;
       padding: 0;
       background-image: url(/assets/img/wave2.svg);
@@ -66,83 +66,100 @@
     <center>
       <img src="https://media.licdn.com/dms/image/C560BAQHMnA03XDdf3w/company-logo_200_200/0/1519855918965?e=2147483647&v=beta&t=J3kUMZwIphc90TFKH5oOO9Sa9K59fimgJf-s_okU3zs" alt="" class="src">
     </center>
-    <div class="row text-center">
-      <p class="col-md-4">Nom de l'article</p>
-      <p class="col-md-4">Item Weigth</p>
-      <p class="col-md-4">Unité de vente</p>
+    <div class="row d-flex text-center">
+      <p id="itemName" class="col-md-4">Nom de l'article</p>
+      <p id="itemWeigth" class="col-md-4">Item Weigth</p>
+      <p id="itemUnit" class="col-md-4">Unité de vente</p>
     </div>
-    <div class="mt-5 col-md-12"><b>Description courte :</b>
-        <p id="shortDesc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum ullam esse impedit dicta veniam laudantium illo, necessitatibus nemo praesentium odit minima iste maxime, tenetur est!</p>
-      </div>
-      <div class="mt-5 col-md-12"><b>Description longue :</b>
-        <p id="longDesc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci cum sapiente in magnam ducimus quo. Corrupti officiis illum earum maxime nihil, cumque, at quaerat esse vero porro ex voluptatem eos eligendi recusandae quasi! Repellat illo provident quisquam expedita veritatis animi quidem nemo earum ex neque quis, velit, sed amet veniam?</p>
-      </div>
+    <div class="mt-5 col-md-12"><b>Description longue :</b>
+      <p id="longDesc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci cum sapiente in magnam ducimus quo. Corrupti officiis illum earum maxime nihil, cumque, at quaerat esse vero porro ex voluptatem eos eligendi recusandae quasi! Repellat illo provident quisquam expedita veritatis animi quidem nemo earum ex neque quis, velit, sed amet veniam?</p>
+    </div>
 
     <a href="./articles.html" class="mt-5 btn btn-light">Retour</a>
     <button id="update" onclick="changeToInput()" class="btnGroupe mt-5 mx-2 btn btn-light">Mettre à jour</button>
-    <button id="save" onclick="saveChanges()" class="btnGroupe mt-5 mx-2 btn btn-light">Enregistrer</button>
-    <button class="btnGroupe mt-5 btn btn-light">Supprimer</button>
+    <button id="save" onclick="updateItem()" class="btnGroupe mt-5 mx-2 btn btn-light">Enregistrer</button>
+    <button onclick="deleteItem()" class="btnGroupe mt-5 btn btn-light">Supprimer</button>
   </div>
+  
 
+  
   <script>
+
+    var itemWeigthHTML = document.getElementById("itemWeigth")
+    var itemNameHTML = document.getElementById("itemName")
+    var itemUnitHTML = document.getElementById("itemUnit")
+    var itemDescriptionHTML = document.getElementById("longDesc")
+
+    fetch('https://localhost:7075/ReadItem?id=1')
+  .then(response => response.json())
+  .then(data => {
+    
+    itemWeigthHTML.innerHTML = data.itemWeigth
+    itemUnitHTML.innerHTML = data.saleUnite
+  })
+  .catch(error => {
+    console.error("Une erreur s'est produite lors de la requête fetch:", error);
+  });
+
+  fetch('https://localhost:7075/ReadDescriptive?id=1')
+  .then(response => response.json())
+  .then(data => {
+    
+    itemNameHTML.innerHTML = data.descriptionShort
+    itemDescriptionHTML.innerHTML = data.descriptionLong
+  })
+  .catch(error => {
+    console.error("Une erreur s'est produite lors de la requête fetch:", error);
+  });
+
+
+
+    //--------------------------
     var shortDescText, longDescText, paragraphsContent;
     document.getElementById('save').style.display = 'none';
 
     function changeToInput() {
-        document.getElementById('save').style.display = '';
-        document.getElementById('update').style.display = 'none';
-      
-        paragraphsContent = []; // Tableau pour stocker le contenu des paragraphes d'origine
-      
-        var paragraphs = document.querySelectorAll('.col-md-4');
-        paragraphs.forEach(function (paragraph) {
+      document.getElementById('save').style.display = '';
+      document.getElementById('update').style.display = 'none';
+  
+      paragraphsContent = []; // Tableau pour stocker le contenu des paragraphes d'origine
+  
+      var paragraphs = document.querySelectorAll('.col-md-4');
+      paragraphs.forEach(function (paragraph) {
+          var inputDiv = document.createElement('div');
+          inputDiv.classList.add('col-md-4'); // Ajouter la classe Bootstrap 'col-md-4'
+  
           var input = document.createElement('input');
           input.type = 'text';
           input.value = paragraph.innerText;
           input.classList.add('form-control', 'mb-2');
-          paragraph.parentNode.replaceChild(input, paragraph);
-      
+  
+          // Placer l'élément <input> à l'intérieur de l'élément <div>
+          inputDiv.appendChild(input);
+  
+          // Remplacer le paragraphe par l'élément <div> contenant l'élément <input>
+          paragraph.parentNode.replaceChild(inputDiv, paragraph);
+  
           // Sauvegarder le contenu du paragraphe d'origine dans le tableau
           paragraphsContent.push(paragraph.innerText);
-        });
-      
-        shortDescText = document.getElementById('shortDesc').innerText;
-        var textareaShort = document.createElement('textarea');
-        textareaShort.value = shortDescText;
-        textareaShort.classList.add('form-control'); // Ajouter la classe Bootstrap 'form-control'
-        document.getElementById('shortDesc').parentNode.replaceChild(textareaShort, document.getElementById('shortDesc'));
-      
-        longDescText = document.getElementById('longDesc').innerText;
-        var textareaLong = document.createElement('textarea');
-        textareaLong.value = longDescText;
-        textareaLong.classList.add('form-control'); // Ajouter la classe Bootstrap 'form-control'
-        document.getElementById('longDesc').parentNode.replaceChild(textareaLong, document.getElementById('longDesc'));
-      }
+      });
+  
+      longDescText = document.getElementById('longDesc').innerText;
+      var textareaLong = document.createElement('textarea');
+      textareaLong.value = longDescText;
+      textareaLong.classList.add('form-control'); // Ajouter la classe Bootstrap 'form-control'
+  
+      // Encadrer le nouvel élément <textarea> avec un div de classe 'col-md-4'
+      var textareaLongDiv = document.createElement('div');
+      textareaLongDiv.appendChild(textareaLong);
+  
+      document.getElementById('longDesc').parentNode.replaceChild(textareaLongDiv, document.getElementById('longDesc'));
+  }
+  
 
-    function saveChanges() {
-        document.getElementById('save').style.display = 'none';
-        document.getElementById('update').style.display = '';
+    function updateItem() {
       
-        var inputs = document.querySelectorAll('.col-md-4 input');
-        inputs.forEach(function (input, index) {
-          var paragraph = document.createElement('p');
-          paragraph.className = 'col-md-4';
-          paragraph.innerText = paragraphsContent[index]; // Restaurer le contenu d'origine
-          input.parentNode.replaceChild(paragraph, input);
-        })
-      
-        var textareaShort = document.querySelector('textarea#shortDesc');
-        var shortDescParagraph = document.createElement('p');
-        shortDescParagraph.id = 'shortDesc'; // Attribuer l'identifiant d'origine
-        shortDescParagraph.innerText = shortDescText;
-        textareaShort.parentNode.replaceChild(shortDescParagraph, textareaShort);
-      
-        var textareaLong = document.querySelector('textarea#longDesc');
-        var longDescParagraph = document.createElement('p');
-        longDescParagraph.id = 'longDesc'; // Attribuer l'identifiant d'origine
-        longDescParagraph.innerText = longDescText;
-        textareaLong.parentNode.replaceChild(longDescParagraph, textareaLong);
-      }
+    }
   </script>
 </body>
 </html>
