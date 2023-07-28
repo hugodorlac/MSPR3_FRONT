@@ -55,6 +55,7 @@
     </body>
 
     <script>
+      function ReadArticle(){
           fetch('https://localhost:7075/ReadCardItem')
         .then(response => response.json())
         .then(data => {
@@ -63,7 +64,7 @@
             const cardDiv = document.createElement('div');
             cardDiv.classList.add('card');
             cardDiv.style.width = '18rem';
-            cardDiv.setAttribute('onclick', 'redirect('+ article.idItem +')');
+            //cardDiv.setAttribute('onclick', 'redirect('+ article.idItem +')');
 
             const cardImage = document.createElement('img');
             cardImage.classList.add('card-img-top');
@@ -92,7 +93,7 @@
 
             const deleteIcon = document.createElement('i');
             deleteIcon.classList.add('fa-solid', 'fa-trash');
-            deleteIcon.setAttribute('onclick', 'deleteArticle()');
+            deleteIcon.setAttribute('onclick', 'deleteArticle(' + article.idItem + ')');
 
             cardBodyDiv.appendChild(cardTitle);
             cardBodyDiv.appendChild(cardPrice);
@@ -108,13 +109,34 @@
         .catch(error => {
           console.error('Une erreur s\'est produite lors de la récupération des données de l\'API:', error);
         });
+      }
 
         function redirect(idItem) {
             window.location = "ficheArticle.html?idArticle=" + idItem;
           }
-        function deleteArticle(idArticle) {
+        
+          
+          function deleteArticle(idArticle) {
+            const confirmation = confirm("Voulez-vous vraiment supprimer cet article ?");
 
-        }
+            if (confirmation){
+              fetch('https://localhost:7075/DeleteItem?id=' + idArticle, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        displayArticles();
+                    })
+                    .catch(error => {
+                        console.error("Une erreur s'est produite lors de la suppression de l'article :", error);
+                    });
+                    location.reload();
+            }  
+          }
+        
 
         function logout() {
             
@@ -133,6 +155,7 @@
         });
     });
 
+    ReadArticle();
 
     </script>
 
