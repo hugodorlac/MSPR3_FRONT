@@ -13,8 +13,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 5px;
+      padding: 15px;
       background-color: #8d16ae9e;
+      color: white;
     }
     .title h2 {
       margin: 0;
@@ -27,7 +28,7 @@
       margin-left: 98%;
       position: absolute;
       right: 1%;
-      top: 1%;
+      top: 2.2%;
     }
     body {     
       margin: 0;
@@ -42,7 +43,7 @@
       background: rgba(255, 255, 255, 0.24);
       border-radius: 16px;
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(5.6px);
+      backdrop-filter: blur(px);
       -webkit-backdrop-filter: blur(5.6px);
       padding: 2rem;
       position:absolute;
@@ -51,6 +52,11 @@
     }
     .btnGroupe {
       float: right;
+    }
+
+    #img {
+      width: 20%;
+      height: 20%;
     }
   </style>
 </head>
@@ -63,9 +69,9 @@
   </header>
 
   <div class="container container-info">
-    <center>
-      <img src="https://media.licdn.com/dms/image/C560BAQHMnA03XDdf3w/company-logo_200_200/0/1519855918965?e=2147483647&v=beta&t=J3kUMZwIphc90TFKH5oOO9Sa9K59fimgJf-s_okU3zs" alt="" class="src">
-    </center>
+    <div align="center" id="imageContainer">
+      <img id="img" src="https://media.licdn.com/dms/image/C560BAQHMnA03XDdf3w/company-logo_200_200/0/1519855918965?e=2147483647&v=beta&t=J3kUMZwIphc90TFKH5oOO9Sa9K59fimgJf-s_okU3zs" alt="" class="src">
+    </div>
     <div class="row d-flex text-center">
       <p id="itemName" class="col-md-4">Nom de l'article</p>
       <p id="itemWeigth" class="col-md-4">Item Weigth</p>
@@ -75,7 +81,7 @@
       <p id="longDesc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci cum sapiente in magnam ducimus quo. Corrupti officiis illum earum maxime nihil, cumque, at quaerat esse vero porro ex voluptatem eos eligendi recusandae quasi! Repellat illo provident quisquam expedita veritatis animi quidem nemo earum ex neque quis, velit, sed amet veniam?</p>
     </div>
 
-    <a href="./articles.html" class="mt-5 btn btn-light">Retour</a>
+    <a href="./listeArticles.html" class="mt-5 btn btn-light">Retour</a>
     <button id="update" onclick="changeToInput()" class="btnGroupe mt-5 mx-2 btn btn-light">Mettre à jour</button>
     <button id="save" onclick="updateItem()" class="btnGroupe mt-5 mx-2 btn btn-light">Enregistrer</button>
     <button onclick="deleteItem()" class="btnGroupe mt-5 btn btn-light">Supprimer</button>
@@ -85,27 +91,35 @@
   
   <script>
 
+    var url_string = window.location.href; 
+    var url = new URL(url_string);
+    var idArticle = url.searchParams.get("idArticle");
+
+
+
     var itemWeigthHTML = document.getElementById("itemWeigth")
     var itemNameHTML = document.getElementById("itemName")
     var itemUnitHTML = document.getElementById("itemUnit")
     var itemDescriptionHTML = document.getElementById("longDesc")
+    var itemImgHTML = document.getElementById("img")
 
-    fetch('https://localhost:7075/ReadItem?id=1')
+    fetch('https://localhost:7075/ReadItemDetail?id='+ idArticle)
   .then(response => response.json())
   .then(data => {
     
     itemWeigthHTML.innerHTML = data.itemWeigth
     itemUnitHTML.innerHTML = data.saleUnite
+    itemNameHTML.innerHTML = data.descriptionShort
+    itemImgHTML.src = data.mediaPath
   })
   .catch(error => {
     console.error("Une erreur s'est produite lors de la requête fetch:", error);
   });
 
-  fetch('https://localhost:7075/ReadDescriptive?id=1')
+  fetch('https://localhost:7075/ReadDescriptive?id=1' + idArticle)
   .then(response => response.json())
   .then(data => {
     
-    itemNameHTML.innerHTML = data.descriptionShort
     itemDescriptionHTML.innerHTML = data.descriptionLong
   })
   .catch(error => {
@@ -154,6 +168,39 @@
       textareaLongDiv.appendChild(textareaLong);
   
       document.getElementById('longDesc').parentNode.replaceChild(textareaLongDiv, document.getElementById('longDesc'));
+
+      //-------------------------------------------------------------------------------------------------------------IMG------------------------------------------------
+
+      document.getElementById('img').style.display = 'none';
+      // Récupérer le conteneur de l'image
+    var imageContainer = document.getElementById('imageContainer');
+
+    // Créer un nouvel élément <input> de type "text" avec les classes Bootstrap nécessaires
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.value = imageContainer.querySelector('img').src; // Récupérer l'URL de l'image actuelle
+    input.classList.add('form-control', 'mb-5'); // Ajouter la classe Bootstrap 'form-control'
+
+    // Définir un gestionnaire d'événement pour valider le texte lors de la saisie
+    input.addEventListener('input', function (event) {
+      var imageUrl = event.target.value;
+      var image = new Image();
+      image.src = imageUrl;
+
+      // Vérifier si l'URL de l'image est valide
+      image.onload = function () {
+        // Si l'image est valide, la remplacer
+        imageContainer.removeChild(imageContainer.querySelector('img'));
+        imageContainer.appendChild(image);
+
+        // Afficher à nouveau le bouton "Modifier l'image"
+        document.getElementById('changeImage').style.display = '';
+      };
+
+    });
+
+    // Ajouter le nouvel élément <input> au conteneur de l'image
+    imageContainer.appendChild(input);
   }
   
 
