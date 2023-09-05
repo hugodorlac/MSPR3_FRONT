@@ -1,0 +1,21 @@
+# Exemple de fichier .gitlab-ci.yml
+# Ce fichier crée une pipeline avec deux jobs, l'un réussit et l'autre échoue systématiquement.
+
+stages:
+  - test
+
+job1:
+  stage: test
+  script:
+    - echo "Ce job réussit systématiquement"
+    # Vous pouvez ajouter d'autres commandes de test ici
+  tags:
+    - my-runner  # Remplacez "my-runner" par le nom de l'étiquette de votre runner
+
+job2:
+  stage: test
+  script:
+    - echo "Ce job échoue systématiquement"
+    - exit 1  # Cette commande provoque un échec du job
+  tags:
+    - my-runner  # Remplacez "my-runner" par le nom de l'étiquette de votre runner
