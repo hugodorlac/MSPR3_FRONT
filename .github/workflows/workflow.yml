@@ -1,0 +1,14 @@
+name: Workflow de Salutation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  saluer:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Saluer le monde
+      run: echo "Bonjour, le monde !"
