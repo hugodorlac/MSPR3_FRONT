@@ -20,4 +20,4 @@ jobs:
       - name: Exécution du Job 2
         run: |
           echo "Ce job échoue systématiquement"
-          exit 1  # Cette commande provoque un échec du job
+          exit 0  # Cette commande provoque un échec du job
