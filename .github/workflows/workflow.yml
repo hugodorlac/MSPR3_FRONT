@@ -8,4 +8,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: lftp
-      run: '' 
+      run: lftp ftp://ducobu:ducobu@51.91.148.161 -e "mirror -e -R index.html/ /index_lftp ; quit"
+
