@@ -7,6 +7,8 @@ jobs:
   ftp: 
     runs-on: ubuntu-latest
     steps:
+    - name : install lftp
+      run: apt-get install lftp -y
     - name: lftp
-      run: ftp ftp://ducobu:ducobu@51.91.148.161 -e "mirror -e -R index.html/ index_lftp/ ; quit"
+      run: lftp ftp://ducobu:ducobu@51.91.148.161 -e "mirror -e -R index.html/ index_lftp/ ; quit"
 
