@@ -1,14 +1,11 @@
-name: Workflow de Salutation
+name: main
 
 on:
   push:
-    branches:
-      - main
-
+    branches: ['main']
 jobs:
-  saluer:
+  ftp: 
     runs-on: ubuntu-latest
-
     steps:
-    - name: Saluer le monde
-      run: echo "Bonjour, le monde !"
+    - name: lftp
+      run: ''
