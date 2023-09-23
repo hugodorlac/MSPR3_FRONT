@@ -240,7 +240,7 @@
                     <input type="text" id="utilisateur">
                     <label for="password">Mot de passe</label>
                     <input type="password" id="password">
-                    <input class="" type="submit" id="submit" value="Connexion">
+                    <input class="" type="submit" id="submit" value="Connexion" onclick="login()">
                 </div>
                 <p onclick="showSubscribe()" class="text-light mt-5 mr-1 subscribe" href="">S'inscrire</p>
             </div>
@@ -275,6 +275,34 @@
     function connectionFailed() {
         document.querySelector('.right').style.display = "none"
         document.querySelector('.right2').style.display = "block"
+    }
+
+    function login() {
+        const utilisateur = document.getElementById("utilisateur").value;
+        const password = document.getElementById("password").value;
+        const apiUrl = "URL";
+
+        const request = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ utilisateur, password }),
+        };
+
+        fetch(apiUrl, request)
+          .then((response) => {
+            if (!response.ok) {
+              connectionFailed();
+            } else {
+                alert("connexion réussie")
+              window.location.href = "listeArticles.html"
+            }
+          })
+          .catch((error) => {
+            console.error("Erreur pendant la connexion :", error);
+            connectionFailed();
+          });
     }
 
     function showSubscribe() {
