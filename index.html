@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
     <style>
         @import url('https://rsms.me/inter/inter-ui.css');
 
@@ -272,38 +273,49 @@
 </html>
 <script>
 
+function login() {
+        const apiUrl = "https://localhost:7075/userLogin";
+        const username = document.getElementById("utilisateur").value;
+        const password = document.getElementById("password").value;
+        const requestData = {
+            Username: username,
+            PasswordHash: password,
+        };
+        const request = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+        };
+
+        fetch(apiUrl, request)
+            .then((response) => {
+                if (!response.ok) {
+                    connectionFailed();
+                } else {
+                    return response.text();
+                    console.log(response.text());
+                    
+                }
+            })
+            .then ((token) => {
+                Cookies.set('token', token, { expires: 1 });
+                alert("Vous allez maitenant être redirigé");
+                window.location.href = 'vues/listeArticles.html';
+            })
+            .catch((error) => {
+                console.error("Erreur pendant la connexion :", error);
+                connectionFailed();
+            });
+    }
+
+
     function connectionFailed() {
         document.querySelector('.right').style.display = "none"
         document.querySelector('.right2').style.display = "block"
     }
-
-    function login() {
-        const utilisateur = document.getElementById("utilisateur").value;
-        const password = document.getElementById("password").value;
-        const apiUrl = "URL";
-
-        const request = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ utilisateur, password }),
-        };
-
-        fetch(apiUrl, request)
-          .then((response) => {
-            if (!response.ok) {
-              connectionFailed();
-            } else {
-                alert("connexion réussie")
-              window.location.href = "listeArticles.html"
-            }
-          })
-          .catch((error) => {
-            console.error("Erreur pendant la connexion :", error);
-            connectionFailed();
-          });
-    }
+    
 
     function showSubscribe() {
         document.querySelector('#subscribe').style.display = ""
@@ -369,3 +381,4 @@
 
 
 </script>
+
